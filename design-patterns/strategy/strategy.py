@@ -165,7 +165,7 @@ def demonstrate_strategy_pattern():
     print("2. The cart doesn't need to know HOW each payment works")
     print("3. We can add new payment methods without changing existing code")
     print("4. Strategies can be switched at runtime")
-    print("=" * 60)
+    print("=" * 65)
 
 
 if __name__ == "__main__":
