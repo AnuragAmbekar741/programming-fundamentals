@@ -23,3 +23,19 @@ def is_anagram(t:str,s:str)->bool:
 
 print(is_anagram("anurag","raaanu"))
 
+def is_anagram2(t:str, s:str) -> bool:
+    if len(t) != len(s):
+        return False
+    
+    char_count = [0]*26
+
+    for letter in t:
+        char_count[ord(letter)-ord('a')] += 1
+
+    for letter in s:
+        char_count[ord(letter)-ord('a')] -= 1
+
+    return all(count == 0 for count in char_count)
+
+
+print(is_anagram2("anurag","raganu"))
