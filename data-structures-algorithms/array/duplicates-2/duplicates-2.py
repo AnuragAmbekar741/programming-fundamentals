@@ -2,18 +2,22 @@
 
 def has_duplicates_2(nums, k):
     hash_map = {}
-    
+
     for index,value in enumerate(nums):
         if value in hash_map:
             return True
 
-        if len(hash_map)>k:
-            first_ele = next(iter(hash_map))
-            del hash_map[first_ele]
-
         hash_map[value] = index
 
+        hash_map[value] = index
+        if len(hash_map)>k:
+            iterator = iter(hash_map)
+            first_ele = next(iterator)
+            del hash_map[first_ele]
+
     return False
+
+
 
 # Test Case 1: Should return True (duplicate within distance)
 nums1 = [1, 2, 3, 1]
