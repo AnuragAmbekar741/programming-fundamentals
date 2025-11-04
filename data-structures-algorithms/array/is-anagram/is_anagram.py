@@ -1,3 +1,6 @@
+from operator import truediv
+
+
 def is_anagram(t:str,s:str)->bool:
     if len(t) != len(s):
         return False
@@ -39,3 +42,15 @@ def is_anagram2(t:str, s:str) -> bool:
 
 
 print(is_anagram2("anurag","raganu"))
+
+
+def is_anagram(word1:str,word2:str)->bool:
+    if len(word1) != len(word2):
+        return False
+
+    key1 = tuple(sorted(word1))
+    key2 = tuple(sorted(word2))
+    
+    return key1 == key2
+
+print(is_anagram("anurag","raaanu"))
