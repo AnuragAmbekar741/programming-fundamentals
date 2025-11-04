@@ -28,7 +28,7 @@ class Tuple_in_python:
     
     def __eq__(self, other):
         """Check equality: my_tuple1 == my_tuple2"""
-        if not isinstance(other, MyTuple):
+        if not isinstance(other, Tuple_in_python):
             return False
         if len(self) != len(other):
             return False
@@ -66,19 +66,19 @@ class Tuple_in_python:
     
     def __add__(self, other):
         """Concatenation: my_tuple1 + my_tuple2"""
-        if isinstance(other, MyTuple):
-            return MyTuple(*(self._data + other._data))
+        if isinstance(other, Tuple_in_python):
+            return Tuple_in_python(*(self._data + other._data))
         return NotImplemented
     
     def __mul__(self, n):
         """Repetition: my_tuple * 3"""
         if isinstance(n, int):
-            return MyTuple(*(self._data * n))
+            return Tuple_in_python(*(self._data * n))
         return NotImplemented
     
     def __lt__(self, other):
         """Less than comparison"""
-        if not isinstance(other, MyTuple):
+        if not isinstance(other, Tuple_in_python):
             return NotImplemented
         return self._data < other._data
     
@@ -88,7 +88,7 @@ class Tuple_in_python:
     
     def __gt__(self, other):
         """Greater than"""
-        if not isinstance(other, MyTuple):
+        if not isinstance(other, Tuple_in_python):
             return NotImplemented
         return self._data > other._data
     
@@ -100,9 +100,9 @@ class Tuple_in_python:
 # Test the implementation
 if __name__ == "__main__":
     # Create tuples
-    t1 = MyTuple(1, 2, 3)
-    t2 = MyTuple(4, 5)
-    t3 = MyTuple(1, 2, 3)
+    t1 = Tuple_in_python(1, 2, 3)
+    t2 = Tuple_in_python(4, 5)
+    t3 = Tuple_in_python(1, 2, 3)
     
     print(f"t1 = {t1}")              # (1, 2, 3)
     print(f"t2 = {t2}")              # (4, 5)
@@ -133,7 +133,7 @@ if __name__ == "__main__":
     print(f"5 in t1: {5 in t1}")     # False
     
     # Count
-    t6 = MyTuple(1, 2, 2, 3, 2)
+    t6 = Tuple_in_python(1, 2, 2, 3, 2)
     print(f"Count of 2 in {t6}: {t6.count(2)}")  # 3
     
     # Index
@@ -141,12 +141,12 @@ if __name__ == "__main__":
     
     # Hashable (for dictionary keys)
     my_dict = {
-        MyTuple(1, 2): "first",
-        MyTuple(3, 4): "second"
+        Tuple_in_python(1, 2): "first",
+        Tuple_in_python(3, 4): "second"
     }
     print(f"Dictionary: {my_dict}")  # {(1, 2): 'first', (3, 4): 'second'}
     
     # Comparison
-    t7 = MyTuple(1, 2, 3)
-    t8 = MyTuple(1, 2, 4)
+    t7 = Tuple_in_python(1, 2, 3)
+    t8 = Tuple_in_python(1, 2, 4)
     print(f"{t7} < {t8}: {t7 < t8}")  # True
