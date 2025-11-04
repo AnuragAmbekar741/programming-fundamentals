@@ -1,23 +1,18 @@
-def group_anagram(strs:list[str])->list[list[str]]:
-    result = {} 
-    for word in strs:
-        word_hash_map = {}
-        for letter in word:
-            if letter in word_hash_map:
-                word_hash_map[letter]+=1
-            else:
-                word_hash_map[letter]=1
-
-        key = tuple(sorted(word_hash_map.items()))
-        
-        # Add word to the group with this key
-        if key in result:
-            result[key].append(word)
+def is_group_anagram(words:list[str])->list[list[str]]:
+    result = {}
+    for word in words:
+        sortedLetterTuple = tuple(sorted(word))
+        if sortedLetterTuple in result:
+            result[sortedLetterTuple].append(word)
         else:
-            result[key] = [word]
-    
-    # Return just the grouped words (without the keys)
+            result[sortedLetterTuple] = [word]
     return list(result.values())
 
-# Test it
-print(group_anagram(["eat", "tea", "tan"]))
+print(is_group_anagram(['eat','ate','tap']))
+
+
+
+
+
+
+
