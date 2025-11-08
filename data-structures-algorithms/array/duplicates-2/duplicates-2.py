@@ -27,6 +27,8 @@ def is_duplicate_in_range(nums:list[int],k:int):
             iterator = iter(num_map)
             first_ele = next(iterator)
             del num_map[first_ele]
-            # del num_map[next(iter(num_map))]
     return False
+
+print(is_duplicate_in_range([1,2,3,4,1,2], 3))
+
 
