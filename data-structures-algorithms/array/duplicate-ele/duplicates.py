@@ -1,13 +1,11 @@
-array = [1,4,3,5,7]
-
-def has_dups(array):
-    hash_map = {}
-    for index,value in enumerate(array):
-        if value in hash_map:
+def is_duplicate(nums:list[int])->bool:
+    num_map = {}
+    for index,value in enumerate(nums):
+        if value in num_map:
             return True
         else:
-            hash_map[value]=index
+            num_map[index] = value
     return False
 
 
-print(has_dups(array))
+print(is_duplicate([1,2,3,4,1]))

@@ -1,23 +1,31 @@
-
-
-def has_duplicates_2(nums, k):
-    hash_map = {}
-
+def is_duplicate_in_range1(nums: list[int], k: int) -> bool:
+    value_to_indices = {}
+    
+    for i in range(len(nums)):
+        value = nums[i]
+        if value not in value_to_indices:
+            value_to_indices[value] = []
+        value_to_indices[value].append(i)
+    
+    for value, indices in value_to_indices.items():
+        if len(indices) > 1:
+            for i in range(len(indices) - 1):
+                difference = indices[i + 1] - indices[i]
+                if difference <= k:
+                    return True
+    
+    return False
+def is_duplicate_in_range(nums:list[int],k:int):
+    num_map = {}
     for index,value in enumerate(nums):
-        if value in hash_map:
-            return True
-
-        hash_map[value] = index
-
-        hash_map[value] = index
-        if len(hash_map)>k:
-            iterator = iter(hash_map)
+        if value in num_map:
+            return True 
+        num_map[index] = value
+        if(len(num_map)>k):
+            iterator = iter(num_map)
             first_ele = next(iterator)
-            del hash_map[first_ele]
-
+            del num_map[first_ele]
+            # del num_map[next(iter(num_map))]
     return False
 
-
-nums1 = [1, 2, 3, 1]
-k1 = 3
-print(has_duplicates_2(nums1, k1))
+print(is_duplicate_in_range([1,2,1,4,1,6], 1))
