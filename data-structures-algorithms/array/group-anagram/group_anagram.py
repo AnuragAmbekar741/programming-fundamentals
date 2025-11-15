@@ -1,5 +1,5 @@
 def is_group_anagram(words:list[str])->list[list[str]]:
-    result={}
+    result_map = {}
     result_array = []
     for word in words:
         word_map = {}
@@ -8,90 +8,36 @@ def is_group_anagram(words:list[str])->list[list[str]]:
                 word_map[letter]+=1
             else:
                 word_map[letter]=1
-        result[word]=word_map
-
-    result_word = list(result.keys())
-    result_key_len = len(result.keys())
-    visited = set()  # to avoid adding same word multiple times
-
-    for i in range(result_key_len):
-        word1 = result_word[i]
-        if word1 in visited:
-            continue
-
-        group = [word1]  # start a new group with this word
-
-        for j in range(i + 1, result_key_len):
-            word2 = result_word[j]
-            if word2 in visited:
-                continue
-
-            if result[word1] == result[word2]:
-                group.append(word2)
-                visited.add(word2)
-
-        visited.add(word1)
-        result_array.append(group)
-
-    return result_array  
+        result_map[word] = word_map
     
+    total_words = len(words)
+    visited_words = set()
+    for i in range(total_words):
+        word1 = words[i]
+        if word1 in visited_words:
+            continue
+        group = [word1]
 
-print(is_group_anagram(['eat','ate','tap']))
+        for j in range(i+1,total_words):
+            word2 = words[j]
+            if word1 in visited_words:
+                continue
+            if result_map[word1]==result_map[word2]:
+                group.append(word2)
+                visited_words.add(word2)
+        result_array.append(group)
+    return result_array
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+print(is_group_anagram(['act','eat','ate','tac','tap','cat']))
 
 def is_group_anagram(words:list[str])->list[list[str]]:
-    result = {}
+    result={}
     for word in words:
-        sortedLetterTuple = tuple(sorted(word))
-        if sortedLetterTuple in result:
-            result[sortedLetterTuple].append(word)
+        sorted_word_tuple = tuple(sorted(word))
+        if sorted_word_tuple in result:
+            result[sorted_word_tuple].append(word)
         else:
-            result[sortedLetterTuple] = [word]
+            result[sorted_word_tuple] = [word]
     return list(result.values())
 
-print(is_group_anagram(['eat','ate','tap']))
+print(is_group_anagram(['act','eat','ate','tac','tap','cat','pat']))
