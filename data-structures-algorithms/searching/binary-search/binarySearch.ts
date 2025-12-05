@@ -1,15 +1,15 @@
-function binarySearch(hayStack: number[], needle: number) {
+function binarySearch(hayStack: number[], needle: number): boolean {
   let low = 0;
   let high = hayStack.length;
-
-  do {
+  for (let i = 0; i < hayStack.length; i++) {
+    if (low > high) break;
     const mid = Math.floor(low + (high - low) / 2);
     const value = hayStack[mid];
-    console.log("mid", mid, "value", value, "low", low, "high", high);
     if (value === needle) return true;
     else if (value > needle) high = mid;
     else low = mid + 1;
-  } while (low < high);
+  }
   return false;
 }
-console.log(binarySearch([10, 12, 15, 16, 19, 21, 24, 25, 34], 12));
+
+console.log(binarySearch([2, 5, 7, 8, 9, 10, 14, 18, 19], 3));

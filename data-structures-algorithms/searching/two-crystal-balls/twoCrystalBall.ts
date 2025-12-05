@@ -1,16 +1,40 @@
 function twoCrystalBall(breaks: boolean[]): number {
-  const jumpAmount = Math.floor(Math.sqrt(breaks.length));
-  let i = jumpAmount;
-  for (; i < breaks.length; i += jumpAmount) {
+  const jump = Math.floor(Math.sqrt(breaks.length));
+  let i = jump;
+  for (; i < breaks.length; i += jump) {
     if (breaks[i]) {
       break;
     }
   }
-  i -= jumpAmount;
-  for (let j = 0; j < jumpAmount; j++, i++) {
-    if (breaks[i]) {
-      return i;
-    }
+  i -= jump;
+  for (let j = 0; j < jump; j++, i++) {
+    if (breaks[i]) return i;
   }
   return -1;
 }
+
+console.log(
+  twoCrystalBall([
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+  ])
+);
