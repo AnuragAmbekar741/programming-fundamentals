@@ -1,6 +1,5 @@
 import math
 
-
 def binary_search(arr:list[int],target:int)->int:
     low = 0
     high = len(arr)
