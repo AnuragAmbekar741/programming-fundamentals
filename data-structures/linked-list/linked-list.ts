@@ -43,11 +43,20 @@ class SinglyLinkedList<T> {
     this.head = this.head.next;
     this.length--;
     if (this.length === 0) {
-      this.tail = null;
+      this.head = this.tail = null;
     }
-
     removedNode.next = null;
     return removedNode.value;
+  }
+
+  get(index: number): ListNode<T> | null {
+    if (index < 0 || index >= this.length) return null;
+    let curr = this.head;
+    while (index > 0) {
+      curr = curr!.next;
+      index--;
+    }
+    return curr;
   }
 
   toArray(): T[] {
@@ -64,6 +73,10 @@ class SinglyLinkedList<T> {
 const list = new SinglyLinkedList<number>();
 list.prepend(40);
 list.append(50);
-console.log(list.deleteHead());
+list.append(60);
+list.append(70);
+list.append(80);
+list.append(90);
+console.log(list.get(1));
 // console.log(list.toArray());
 // console.log(list);
