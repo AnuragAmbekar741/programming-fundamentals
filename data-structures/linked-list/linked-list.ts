@@ -37,6 +37,19 @@ class SinglyLinkedList<T> {
     this.tail = node;
   }
 
+  deleteHead(): T | null {
+    if (!this.head) return null;
+    const removedNode = this.head;
+    this.head = this.head.next;
+    this.length--;
+    if (this.length === 0) {
+      this.tail = null;
+    }
+
+    removedNode.next = null;
+    return removedNode.value;
+  }
+
   toArray(): T[] {
     const result: T[] = [];
     let cur = this.head;
@@ -51,5 +64,6 @@ class SinglyLinkedList<T> {
 const list = new SinglyLinkedList<number>();
 list.prepend(40);
 list.append(50);
-console.log(list.toArray());
-console.log(list);
+console.log(list.deleteHead());
+// console.log(list.toArray());
+// console.log(list);
