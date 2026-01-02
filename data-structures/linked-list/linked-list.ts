@@ -36,10 +36,20 @@ class SinglyLinkedList<T> {
     this.tail!.next = node;
     this.tail = node;
   }
+
+  toArray(): T[] {
+    const result: T[] = [];
+    let cur = this.head;
+    while (cur !== null) {
+      result.push(cur.value);
+      cur = cur.next;
+    }
+    return result;
+  }
 }
 
 const list = new SinglyLinkedList<number>();
 list.prepend(40);
 list.append(50);
-
+console.log(list.toArray());
 console.log(list);
