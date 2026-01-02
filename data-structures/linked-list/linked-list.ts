@@ -59,6 +59,19 @@ class SinglyLinkedList<T> {
     return curr;
   }
 
+  insertAt(index: number, value: T): void {
+    if (index < 0 || index > this.length) return;
+    if (index === 0) return this.prepend(value);
+    if (index === this.length) return this.append(value);
+    const newNode = new ListNode(value);
+    const previousNode = this.get(index - 1);
+    if (!previousNode) return;
+    const curNodeAtIndex = previousNode!.next;
+    previousNode.next = newNode;
+    newNode.next = curNodeAtIndex;
+    this.length++;
+  }
+
   toArray(): T[] {
     const result: T[] = [];
     let cur = this.head;
