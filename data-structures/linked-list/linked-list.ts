@@ -72,6 +72,33 @@ class SinglyLinkedList<T> {
     this.length++;
   }
 
+  removeAt(index: number): ListNode<T> | null {
+    if (index < 0 || index >= this.length) return null;
+
+    if (index === 0) {
+      const removed = this.head!;
+      this.head = removed.next;
+      this.length--;
+
+      if (this.length === 0) this.tail = null;
+
+      removed.next = null;
+      return removed;
+    }
+
+    const prev = this.get(index - 1);
+    if (!prev || !prev.next) return null;
+
+    const removed = prev.next;
+    prev.next = removed.next;
+
+    if (removed === this.tail) this.tail = prev;
+
+    this.length--;
+    removed.next = null;
+    return removed;
+  }
+
   toArray(): T[] {
     const result: T[] = [];
     let cur = this.head;
@@ -91,5 +118,3 @@ list.append(70);
 list.append(80);
 list.append(90);
 console.log(list.get(1));
-// console.log(list.toArray());
-// console.log(list);
