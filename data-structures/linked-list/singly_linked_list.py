@@ -43,4 +43,36 @@ class SinglyLinkedList(Generic[T]):
             cur = cur.next
             index-=1
         return cur
+    
+    def list_to_arr(self)->List[T]:
+        result:List[T] = []
+        cur = self.head
+        while cur is not None:
+            result.append(cur.value)
+            cur = cur.next
+        
+        return result
+    
+    def remove_head(self):
+        if self.head is None:
+            return None
+        
+        removed = self.head
+        self.head = removed.next
+        self.length -= 1
+
+        if self.length is 0:
+            self.head = self.tail = None
+        
+        removed.next = None
+        return removed
+    
+    def remove_tail(self):
+        if self.head is None:
+            return None
+        cur = self.head
+        while cur.next is None:
+            cur = cur.next
+        cur.next = None
+        self.tail = cur
 
