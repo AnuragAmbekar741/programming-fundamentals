@@ -20,7 +20,7 @@ class SinglyLinkedList(Generic[T]):
         node = ListNode(value)
 
         if self.head is None:
-            self.head = self.tail = None
+            self.head = self.tail = node
         else:
             node.next = self.head
             self.head = node
@@ -61,18 +61,61 @@ class SinglyLinkedList(Generic[T]):
         self.head = removed.next
         self.length -= 1
 
-        if self.length is 0:
+        if self.length == 0:
             self.head = self.tail = None
         
         removed.next = None
         return removed
     
-    def remove_tail(self):
+    def remove_tail(self) -> Optional[ListNode[T]]:
+        if self.head is None:
+            return None
+
+        # one node
+        if self.length == 1:
+            removed = self.head
+            self.head = self.tail = None
+            self.length = 0
+            return removed
+
+        cur = self.head
+        assert self.tail is not None
+
+        while cur.next is not self.tail:
+            cur = cur.next  # type: ignore[assignment]
+
+        removed = self.tail
+        cur.next = None
+        self.tail = cur
+        self.length -= 1
+
+        removed.next = None
+        return removed
+    
+    def reverse(self):
         if self.head is None:
             return None
         cur = self.head
-        while cur.next is None:
-            cur = cur.next
-        cur.next = None
-        self.tail = cur
+        prev = None
+        self.tail = self.head
+        while cur is not None:
+            nxt = cur.next
+            cur.next = prev
+            prev = cur
+            cur = nxt
+        self.head = prev
+
+
+ll = SinglyLinkedList[int]()
+ll.append(10)
+ll.append(20)
+ll.prepend(5)
+print(ll.list_to_arr())  # [5, 10, 20]
+
+ll.remove_tail()
+print(ll.list_to_arr())  # [5, 10]
+
+ll.reverse()
+print(ll.list_to_arr())  # [10, 5]
+print(ll.length)  
 
