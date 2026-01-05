@@ -83,6 +83,31 @@ class DoublyLinkedList<T> {
     return remove;
   }
 
-  toArray() {}
-  reverse() {}
+  toArray(): T[] {
+    const result: T[] = [];
+    let curr = this.head;
+    while (curr !== null) {
+      result.push(curr.value);
+      curr = curr.next;
+    }
+    return result;
+  }
+
+  reverse() {
+    if (!this.head || this.length === 1) return;
+    let prev: DoublyListNode<T> | null = null;
+    let cur: DoublyListNode<T> | null = this.head;
+
+    let oldHead = this.head;
+    let oldTail = this.tail;
+    this.tail = oldHead;
+    this.head = oldTail;
+
+    while (cur !== null) {
+      let next = cur.next;
+      cur.next = cur.prev;
+      cur.prev = next;
+      cur = next;
+    }
+  }
 }
