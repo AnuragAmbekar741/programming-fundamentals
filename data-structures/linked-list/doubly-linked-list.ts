@@ -13,32 +13,35 @@ class DoublyListNode<T> {
     this.prev = prev;
   }
 }
-
 class DoublyLinkedList<T> {
   head: DoublyListNode<T> | null = null;
   tail: DoublyListNode<T> | null = null;
-  length: number = 0;
+  length = 0;
 
-  prepend(value: T) {
+  prepend(value: T): void {
     const node = new DoublyListNode(value);
+
     if (!this.head) {
       this.head = this.tail = node;
       this.length++;
       return;
     }
+
     node.next = this.head;
     this.head.prev = node;
     this.head = node;
     this.length++;
   }
 
-  append(value: T) {
+  append(value: T): void {
     const node = new DoublyListNode(value);
+
     if (!this.head) {
       this.head = this.tail = node;
       this.length++;
       return;
     }
+
     this.tail!.next = node;
     node.prev = this.tail;
     this.tail = node;
@@ -48,39 +51,87 @@ class DoublyLinkedList<T> {
   removeHead(): DoublyListNode<T> | null {
     if (!this.head) return null;
 
-    const remove = this.head;
+    const removed = this.head;
 
     if (this.length === 1) {
-      this.length = 0;
       this.head = this.tail = null;
-      return remove;
+      this.length = 0;
+      return removed;
     }
 
-    this.head = remove.next;
+    this.head = removed.next;
     this.head!.prev = null;
     this.length--;
 
-    remove.next = null;
-    return remove;
+    removed.next = null;
+    removed.prev = null;
+    return removed;
   }
 
   removeTail(): DoublyListNode<T> | null {
-    if (!this.head) return null;
+    if (!this.tail) return null;
 
-    const remove = this.tail;
+    const removed = this.tail;
 
     if (this.length === 1) {
-      this.length = 0;
       this.head = this.tail = null;
-      return remove;
+      this.length = 0;
+      return removed;
     }
 
-    this.tail = remove!.prev;
+    this.tail = removed.prev;
     this.tail!.next = null;
     this.length--;
 
-    remove!.prev = null;
-    return remove;
+    removed.prev = null;
+    removed.next = null;
+    return removed;
+  }
+
+  get(index: number): DoublyListNode<T> | null {
+    if (index < 0 || index >= this.length) return null;
+
+    // Optional optimization (DLL advantage):
+    // if (index < this.length / 2) go from head else from tail
+    let curr: DoublyListNode<T> | null;
+    if (index < this.length / 2) {
+      curr = this.head;
+      while (index > 0) {
+        curr = curr!.next;
+        index--;
+      }
+      return curr;
+    } else {
+      curr = this.tail;
+      let i = this.length - 1;
+      while (i > index) {
+        curr = curr!.prev;
+        i--;
+      }
+      return curr;
+    }
+  }
+
+  removeAt(index: number): DoublyListNode<T> | null {
+    if (index < 0 || index >= this.length) return null;
+
+    if (index === 0) return this.removeHead();
+    if (index === this.length - 1) return this.removeTail();
+
+    const node = this.get(index);
+    if (!node) return null;
+
+    const prev = node.prev!;
+    const next = node.next!;
+
+    prev.next = next;
+    next.prev = prev;
+
+    this.length--;
+
+    node.prev = null;
+    node.next = null;
+    return node;
   }
 
   toArray(): T[] {
@@ -93,21 +144,21 @@ class DoublyLinkedList<T> {
     return result;
   }
 
-  reverse() {
+  reverse(): void {
     if (!this.head || this.length === 1) return;
-    let prev: DoublyListNode<T> | null = null;
+
+    const oldHead = this.head;
+    const oldTail = this.tail!;
+
     let cur: DoublyListNode<T> | null = this.head;
-
-    let oldHead = this.head;
-    let oldTail = this.tail;
-    this.tail = oldHead;
-    this.head = oldTail;
-
     while (cur !== null) {
-      let next = cur.next;
+      const next = cur.next;
       cur.next = cur.prev;
       cur.prev = next;
       cur = next;
     }
+
+    this.head = oldTail;
+    this.tail = oldHead;
   }
 }
