@@ -130,6 +130,18 @@ class SignlyLinkedList<T> {
     }
     this.head = prev;
   }
+
+  //Get middle point without length
+
+  getMiddle() {
+    let slow: ListNode<T> | null = this.head;
+    let fast: ListNode<T> | null = this.head;
+    while (fast && fast.next) {
+      slow = slow!.next;
+      fast = fast!.next!.next;
+    }
+    return slow;
+  }
 }
 
 const list = new SignlyLinkedList();
@@ -138,7 +150,8 @@ list.prepend(20);
 list.prepend(30);
 list.prepend(40);
 list.prepend(50);
-list.prepend(60);
-list.insertAt(5, 75);
-console.log(list.removeAt(3));
-console.log(list.length);
+// list.prepend(60);
+// list.insertAt(5, 75);
+// console.log(list.removeAt(3));
+console.log("length is", list.length);
+console.log("middle", list.getMiddle());
