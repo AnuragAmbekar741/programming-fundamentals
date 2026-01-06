@@ -104,18 +104,18 @@ class SinglyLinkedList(Generic[T]):
             prev = cur
             cur = nxt
         self.head = prev
+    
+    def getMiddle(self):
+        slow = fast = self.head
+        while fast is not None and fast.next is not None:
+            slow = slow.next
+            fast = fast.next.next
+        return slow
 
 
 ll = SinglyLinkedList[int]()
 ll.append(10)
 ll.append(20)
 ll.prepend(5)
-print(ll.list_to_arr())  # [5, 10, 20]
-
-ll.remove_tail()
-print(ll.list_to_arr())  # [5, 10]
-
-ll.reverse()
-print(ll.list_to_arr())  # [10, 5]
-print(ll.length)  
+print(ll.getMiddle())
 
