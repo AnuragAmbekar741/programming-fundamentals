@@ -7,6 +7,7 @@ export default class Queue<T> {
   public length: number;
   private head?: QNode<T>;
   private tail?: QNode<T>;
+
   constructor() {
     this.head = this.tail = undefined;
     this.length = 0;
@@ -22,10 +23,13 @@ export default class Queue<T> {
 
   dequeue(): T | undefined {
     if (!this.head) return undefined;
-    this.length -= 1;
-    const head = this.head;
-    this.head = this.head.next ?? undefined;
-    return head.value;
+    else {
+      const remove = this.head;
+      this.head = remove.next;
+      this.length--;
+      remove.next = undefined;
+      return remove.value;
+    }
   }
 
   peek(): T | undefined {
