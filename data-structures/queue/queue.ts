@@ -14,22 +14,31 @@ export default class Queue<T> {
   }
 
   enqueue(item: T): void {
-    const node = { value: item } as QNode<T>;
-    if (!this.tail) this.head = this.tail = node;
-    this.length += 1;
-    this.tail.next = node;
-    this.tail = node;
+    const node: QNode<T> = { value: item };
+
+    if (!this.tail) {
+      this.head = this.tail = node;
+    } else {
+      this.tail.next = node;
+      this.tail = node;
+    }
+
+    this.length++;
   }
 
   dequeue(): T | undefined {
     if (!this.head) return undefined;
-    else {
-      const remove = this.head;
-      this.head = remove.next;
-      this.length--;
-      remove.next = undefined;
-      return remove.value;
+
+    const removed = this.head;
+    this.head = removed.next;
+    this.length--;
+
+    if (this.length === 0) {
+      this.tail = undefined;
     }
+
+    removed.next = undefined;
+    return removed.value;
   }
 
   peek(): T | undefined {
