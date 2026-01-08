@@ -84,3 +84,73 @@ class DoublyLinkedList(Generic[T]):
         removed.prev = None
         removed.next = None
         return removed
+
+    def get(self, index: int) -> Optional[DoublyListNode[T]]:
+        if index < 0 or index >= self.length:
+            return None
+
+        # Optimization (DLL advantage):
+        # if index < length / 2 go from head else from tail
+        if index < self.length // 2:
+            curr = self.head
+            while index > 0:
+                curr = curr.next
+                index -= 1
+            return curr
+        else:
+            curr = self.tail
+            i = self.length - 1
+            while i > index:
+                curr = curr.prev
+                i -= 1
+            return curr
+
+    def remove_at(self, index: int) -> Optional[DoublyListNode[T]]:
+        if index < 0 or index >= self.length:
+            return None
+
+        if index == 0:
+            return self.remove_head()
+        if index == self.length - 1:
+            return self.remove_tail()
+
+        node = self.get(index)
+        if not node:
+            return None
+
+        prev_node = node.prev
+        next_node = node.next
+
+        prev_node.next = next_node
+        next_node.prev = prev_node
+
+        self.length -= 1
+
+        node.prev = None
+        node.next = None
+        return node
+
+    def to_array(self) -> List[T]:
+        result: List[T] = []
+        curr = self.head
+        while curr is not None:
+            result.append(curr.value)
+            curr = curr.next
+        return result
+
+    def reverse(self) -> None:
+        if not self.head or self.length == 1:
+            return
+
+        old_head = self.head
+        old_tail = self.tail
+
+        curr = self.head
+        while curr is not None:
+            next_node = curr.next
+            curr.next = curr.prev
+            curr.prev = next_node
+            curr = next_node
+
+        self.head = old_tail
+        self.tail = old_head
